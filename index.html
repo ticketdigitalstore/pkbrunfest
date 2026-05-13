@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PKB RUN FEST - Pendaftaran</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f1f1f1;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:'';
+    position:fixed;
+    width:300px;
+    height:300px;
+    background:#304ffe;
+    border-radius:50%;
+    top:-100px;
+    right:-100px;
+    opacity:0.15;
+    z-index:-1;
+}
+
+body::after{
+    content:'';
+    position:fixed;
+    width:250px;
+    height:250px;
+    background:#00c853;
+    border-radius:50%;
+    bottom:-100px;
+    left:-100px;
+    opacity:0.15;
+    z-index:-1;
+}
+
+.header{
+    width:100%;
+    background:white;
+    padding:18px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    text-align:center;
+    font-size:32px;
+    font-weight:700;
+    color:#111;
+}
+
+.logo span{
+    color:#304ffe;
+}
+
+.container{
+    width:100%;
+    max-width:850px;
+    margin:auto;
+    padding:20px;
+}
+
+.timer-box{
+    background:linear-gradient(45deg,#304ffe,#1a237e);
+    color:white;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:20px;
+    box-shadow:0 10px 25px rgba(48,79,254,0.3);
+    animation:fadeIn 0.6s ease;
+}
+
+.timer-title{
+    font-size:14px;
+    opacity:0.9;
+}
+
+#timer{
+    font-size:35px;
+    font-weight:700;
+    margin-top:5px;
+}
+
+.card{
+    background:white;
+    border-radius:25px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    animation:slideUp 0.5s ease;
+}
+
+.step-indicator{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:25px;
+    gap:10px;
+}
+
+.step{
+    flex:1;
+    text-align:center;
+    padding:12px;
+    border-radius:15px;
+    background:#eee;
+    font-size:14px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.step.active{
+    background:#304ffe;
+    color:white;
+    transform:scale(1.03);
+}
+
+h2{
+    margin-bottom:20px;
+    color:#333;
+}
+
+.ticket-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:15px;
+}
+
+.ticket-box{
+    border:2px solid #ddd;
+    padding:20px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:0.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.ticket-box:hover{
+    transform:translateY(-3px);
+}
+
+.ticket-box.active{
+    border-color:#304ffe;
+    background:#eef1ff;
+}
+
+.ticket-title{
+    font-size:24px;
+    font-weight:700;
+}
+
+.ticket-price{
+    color:#304ffe;
+    font-size:22px;
+    margin-top:8px;
+    font-weight:700;
+}
+
+.counter-area{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.counter-btn{
+    width:60px;
+    height:60px;
+    border:none;
+    border-radius:50%;
+    font-size:28px;
+    background:#304ffe;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 6px 15px rgba(48,79,254,0.3);
+}
+
+.counter-btn:hover{
+    transform:scale(1.1);
+}
+
+#jumlahPeserta{
+    font-size:35px;
+    font-weight:700;
+    width:80px;
+    text-align:center;
+}
+
+.total-box{
+    margin-top:25px;
+    background:#f5f5f5;
+    padding:18px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.total-price{
+    font-size:32px;
+    font-weight:700;
+    color:#00c853;
+}
+
+.form-peserta{
+    margin-top:20px;
+    border-radius:20px;
+    overflow:hidden;
+    background:white;
+    box-shadow:0 10px 20px rgba(0,0,0,0.08);
+    animation:fadeIn 0.4s ease;
+}
+
+.form-header{
+    background:#304ffe;
+    color:white;
+    padding:18px;
+    font-size:20px;
+    font-weight:700;
+}
+
+.form-body{
+    padding:20px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#444;
+}
+
+input,select{
+    width:100%;
+    padding:15px;
+    border:2px solid #ddd;
+    border-radius:14px;
+    font-size:15px;
+    transition:0.3s;
+    outline:none;
+}
+
+input:focus,select:focus{
+    border-color:#304ffe;
+    box-shadow:0 0 0 4px rgba(48,79,254,0.1);
+}
+
+.preview-ktp{
+    width:100%;
+    margin-top:10px;
+    border-radius:15px;
+    display:none;
+}
+
+.btn-area{
+    display:flex;
+    gap:15px;
+    margin-top:25px;
+}
+
+.btn{
+    flex:1;
+    border:none;
+    padding:16px;
+    border-radius:15px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:700;
+    transition:0.3s;
+}
+
+.btn-next{
+    background:#304ffe;
+    color:white;
+}
+
+.btn-prev{
+    background:#ddd;
+}
+
+.btn-submit{
+    background:#00c853;
+    color:white;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.success{
+    display:none;
+    text-align:center;
+    padding:40px 20px;
+}
+
+.success h1{
+    color:#00c853;
+    margin-bottom:15px;
+}
+
+.fade{
+    animation:fadeIn 0.4s ease;
+}
+
+.hidden{
+    display:none;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes slideUp{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:24px;
+    }
+
+    #timer{
+        font-size:28px;
+    }
+
+    .ticket-title{
+        font-size:20px;
+    }
+
+    .ticket-price{
+        font-size:18px;
+    }
+
+    .total-price{
+        font-size:26px;
+    }
+
+    .btn-area{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">
+        <span>PKB</span> RUN FEST
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="timer-box">
+        <div class="timer-title">Sisa Waktu Pengisian Formulir</div>
+        <div id="timer">10:00</div>
+    </div>
+
+    <div class="card fade">
+
+        <div class="step-indicator">
+            <div class="step active" id="step1Indicator">1. Tiket</div>
+            <div class="step" id="step2Indicator">2. Data</div>
+            <div class="step" id="step3Indicator">3. Checkout</div>
+        </div>
+
+        <!-- STEP 1 -->
+        <div id="step1">
+
+            <h2>Pilih Tiket</h2>
+
+            <div class="ticket-grid">
+
+                <div class="ticket-box active" onclick="pilihTiket('10K',175000,this)">
+                    <div class="ticket-title">10K RUN</div>
+                    <div class="ticket-price">Rp 175.000</div>
+                </div>
+
+                <div class="ticket-box" onclick="pilihTiket('5K',100000,this)">
+                    <div class="ticket-title">5K FUN RUN</div>
+                    <div class="ticket-price">Rp 100.000</div>
+                </div>
+
+            </div>
+
+            <div class="counter-area">
+                <button class="counter-btn" onclick="kurang()">-</button>
+                <div id="jumlahPeserta">1</div>
+                <button class="counter-btn" onclick="tambah()">+</button>
+            </div>
+
+            <div class="total-box">
+                <div>Total Pembayaran</div>
+                <div class="total-price" id="totalHarga">Rp 175.000</div>
+            </div>
+
+            <div class="btn-area">
+                <button class="btn btn-next" onclick="nextStep()">
+                    Lanjut Isi Data
+                </button>
+            </div>
+
+        </div>
+
+        <!-- STEP 2 -->
+        <div id="step2" class="hidden">
+
+            <div id="formContainer"></div>
+
+            <div class="btn-area">
+                <button class="btn btn-prev" onclick="prevStep()">Kembali</button>
+                <button class="btn btn-next" onclick="checkoutStep()">Checkout</button>
+            </div>
+
+        </div>
+
+        <!-- STEP 3 -->
+        <div id="step3" class="hidden">
+
+            <h2>Checkout</h2>
+
+            <div class="total-box">
+                <div style="margin-bottom:10px;">Kategori Tiket</div>
+                <h2 id="checkoutKategori">10K RUN</h2>
+
+                <div style="margin-top:20px;">Jumlah Peserta</div>
+                <h2 id="checkoutJumlah">1 Orang</h2>
+
+                <div style="margin-top:20px;">Total Bayar</div>
+                <div class="total-price" id="checkoutTotal">Rp 175.000</div>
+            </div>
+
+            <div class="btn-area">
+                <button class="btn btn-prev" onclick="backToForm()">Kembali</button>
+                <button class="btn btn-submit" onclick="submitForm()">Bayar Sekarang</button>
+            </div>
+
+        </div>
+
+        <!-- SUCCESS -->
+        <div class="success" id="successBox">
+            <h1>✓ Pendaftaran Berhasil</h1>
+            <p>Data peserta berhasil dikirim.</p>
+            <br>
+            <p>Silakan lanjut pembayaran.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let jumlah = 1;
+let harga = 175000;
+let kategori = '10K RUN';
+
+updateTotal();
+renderForm();
+
+function pilihTiket(nama,hargaTiket,el){
+
+    kategori = nama;
+    harga = hargaTiket;
+
+    document.querySelectorAll('.ticket-box').forEach(box=>{
+        box.classList.remove('active');
+    });
+
+    el.classList.add('active');
+
+    updateTotal();
+}
+
+function tambah(){
+
+    jumlah++;
+
+    document.getElementById('jumlahPeserta').innerText = jumlah;
+
+    updateTotal();
+
+    renderForm();
+}
+
+function kurang(){
+
+    if(jumlah > 1){
+
+        jumlah--;
+
+        document.getElementById('jumlahPeserta').innerText = jumlah;
+
+        updateTotal();
+
+        renderForm();
+    }
+}
+
+function updateTotal(){
+
+    let total = harga * jumlah;
+
+    document.getElementById('totalHarga').innerText = formatRupiah(total);
+}
+
+function formatRupiah(angka){
+
+    return 'Rp ' + angka.toLocaleString('id-ID');
+}
+
+function renderForm(){
+
+    let container = document.getElementById('formContainer');
+
+    container.innerHTML = '';
+
+    for(let i=1; i<=jumlah; i++){
+
+        container.innerHTML += `
+
+        <div class="form-peserta">
+
+            <div class="form-header">
+                DATA PESERTA ${i}
+            </div>
+
+            <div class="form-body">
+
+                <div class="form-group">
+                    <label>Nama Sesuai KTP</label>
+                    <input type="text" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Tanggal Lahir</label>
+                    <input type="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Whatsapp</label>
+                    <input type="number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="emailField" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Konfirmasi Email</label>
+                    <input type="email" class="confirmEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Jenis Kelamin</label>
+                    <select>
+                        <option>Laki-laki</option>
+                        <option>Perempuan</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload KTP</label>
+                    <input type="file" accept="image/*" onchange="previewKTP(event,this)">
+                    <img class="preview-ktp">
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+    }
+}
+
+function previewKTP(event,input){
+
+    let file = event.target.files[0];
+
+    if(file){
+
+        let reader = new FileReader();
+
+        reader.onload = function(e){
+
+            let img = input.nextElementSibling;
+
+            img.src = e.target.result;
+
+            img.style.display = 'block';
+        }
+
+        reader.readAsDataURL(file);
+    }
+}
+
+function nextStep(){
+
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+
+    document.getElementById('step1Indicator').classList.remove('active');
+    document.getElementById('step2Indicator').classList.add('active');
+}
+
+function prevStep(){
+
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step1').classList.remove('hidden');
+
+    document.getElementById('step2Indicator').classList.remove('active');
+    document.getElementById('step1Indicator').classList.add('active');
+}
+
+function checkoutStep(){
+
+    let emails = document.querySelectorAll('.emailField');
+    let confirms = document.querySelectorAll('.confirmEmail');
+
+    for(let i=0; i<emails.length; i++){
+
+        if(emails[i].value !== confirms[i].value){
+
+            alert('Konfirmasi email peserta '+(i+1)+' tidak cocok');
+
+            return;
+        }
+    }
+
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step3').classList.remove('hidden');
+
+    document.getElementById('step2Indicator').classList.remove('active');
+    document.getElementById('step3Indicator').classList.add('active');
+
+    document.getElementById('checkoutKategori').innerText = kategori;
+    document.getElementById('checkoutJumlah').innerText = jumlah + ' Orang';
+    document.getElementById('checkoutTotal').innerText = formatRupiah(harga*jumlah);
+}
+
+function backToForm(){
+
+    document.getElementById('step3').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+
+    document.getElementById('step3Indicator').classList.remove('active');
+    document.getElementById('step2Indicator').classList.add('active');
+}
+
+function submitForm(){
+
+    alert('Data berhasil dikirim');
+
+    // =========================================
+    // SIMPAN KE FIREBASE
+    // =========================================
+    // Tambahkan Firebase SDK di bawah lalu
+    // gunakan addDoc() atau push() database
+
+    // =========================================
+    // SIMPAN KE MYSQL / PHP
+    // =========================================
+    // Gunakan fetch API:
+
+    /*
+
+    fetch('simpan.php',{
+        method:'POST',
+        body:JSON.stringify(data)
+    })
+
+    */
+
+    document.getElementById('step3').style.display = 'none';
+
+    document.getElementById('successBox').style.display = 'block';
+}
+
+// =========================================
+// COUNTDOWN 10 MENIT
+// =========================================
+
+let time = 600;
+
+let countdown = setInterval(()=>{
+
+    let menit = Math.floor(time / 60);
+    let detik = time % 60;
+
+    menit = menit < 10 ? '0'+menit : menit;
+    detik = detik < 10 ? '0'+detik : detik;
+
+    document.getElementById('timer').innerText = menit + ':' + detik;
+
+    time--;
+
+    if(time < 0){
+
+        clearInterval(countdown);
+
+        alert('Waktu pengisian habis');
+
+        location.reload();
+    }
+
+},1000);
+
+</script>
+
+</body>
+</html>
